@@ -45,32 +45,34 @@ public class AgentFactory : IAgentFactory
         return new FAQAgent(_kernel, searchTool);
     }
     
-    /// Creates an admin agent for appointment and complaint handling
+
     public AdminAgent CreateAdminAgent()
     {
-        var emailTool = new EmailTool();
-        return new AdminAgent(_kernel, emailTool);
+        // TODO: Exercise 4 - Implement this method
+        // 1. Create any necessary tools for the admin agent
+        // 2. Initialize and return a new AdminAgent with the kernel and tools
+        
+        throw new NotImplementedException("Exercise: Implement the CreateAdminAgent method");
     }
     
-    /// Creates an agent plugin with registered sub-agents
+
     public AgentPlugin CreateAgentPlugin()
     {
-        var agentPlugin = new AgentPlugin(_genAITracer);
+        // TODO:  Exercise 5 - Implement this method
+        // 1. Create the FAQ and Admin agents
+        // 2. Initialize a new AgentPlugin
+        // 3. Register the agents with the plugin
+        // 4. Return the configured plugin
         
-        // Create and register specialized agents
-        agentPlugin.RegisterAgent(CreateFAQAgent());
-        agentPlugin.RegisterAgent(CreateAdminAgent());
-        
-        return agentPlugin;
+        throw new NotImplementedException("Exercise: Implement the CreateAgentPlugin method");
     }
 
-    /// Creates an orchestrator agent with its sub-agents
     public OrchestratorAgent CreateOrchestrator()
     {
-
-        var intentTool = new IntentTool(_configuration);
-        var agentPlugin = CreateAgentPlugin();
-    
-        return new OrchestratorAgent(_kernel, intentTool, agentPlugin);
+        // TODO:  Exercise 6 Implement this method
+        // 1. Create the necessary sub-agents
+        // 2. Initialize and return a new OrchestratorAgent with the kernel, sub-agents, and any required configuration
+        
+        throw new NotImplementedException("Exercise: Implement the CreateOrchestrator method");
     }
 }
