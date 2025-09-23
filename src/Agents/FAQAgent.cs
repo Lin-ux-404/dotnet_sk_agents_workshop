@@ -21,14 +21,22 @@ public class FAQAgent : IAgent
 
     private static ChatCompletionAgent CreateChatAgent(Kernel kernel, SearchTool searchTool)
     {
-        // TODO: Exercise 1 - Clone the kernel for the agent
-        // Hint: Use the Kernel.Clone() method to create a copy of the kernel
+        // Clone kernel for agent
+        var agentKernel = kernel.Clone();
         
-        // TODO: Exercise 2 - Create function from the search tool method
-        // Hint: Use kernel.CreateFunctionFromMethod to create a function from the SearchDocuments method
+        // Create functions from the search tool methods
+        var searchDocumentsFunction = agentKernel.CreateFunctionFromMethod(
+            searchTool.SearchDocuments, 
+            "SearchTool");
         
-        // TODO: Exercise 3 - Create agent settings
-        // Hint: Initialize a new KernelArguments object
+        // Import the functions into a plugin
+        agentKernel.ImportPluginFromFunctions("SearchTool", [searchDocumentsFunction]);
+        
+        // Create agent settings
+        var settings = new AzureOpenAIPromptExecutionSettings
+        {
+            FunctionChoiceBehavior = FunctionChoiceBehavior.Auto()
+        };
         
         return new ChatCompletionAgent
         {
@@ -60,7 +68,6 @@ public class FAQAgent : IAgent
                 - ALWAYS include a "References:" section at the end with the list of PDF documents used in this exact format
                 - Format the sources as: "References: Document1.pdf, Document2.pdf, Document3.pdf"
             """,
-            // TODO: Exercise 4 - Pass the settings to the Arguments property
             Arguments = new KernelArguments(settings)
         };
     }
